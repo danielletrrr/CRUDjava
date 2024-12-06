@@ -26,19 +26,14 @@ public class GerenciadorArtigos {
     private MongoDatabase database;
     private MongoCollection<Document> collection;
 
+
     public GerenciadorArtigos() {
-        // Inicializar conexão com o MongoDB
-        mongoClient = MongoClients.create(
-            MongoClientSettings.builder()
-                .applyToClusterSettings(builder -> 
-                    builder.hosts(Arrays.asList(
-                        new ServerAddress("localhost", 27017),
-                        new ServerAddress("localhost", 27018),
-                        new ServerAddress("localhost", 27019)
-                    ))
-                )
-                .build()
-        );
+        // URL de conexão com o MongoDB Atlas
+        String uri = "mongodb+srv://danielletrajano16:tnentL592AOnV9mZ@testcrud.27iby.mongodb.net/?retryWrites=true&w=majority&appName=TestCrud";
+    
+        mongoClient = MongoClients.create(uri); // Conexão com o Atlas usando a string URI
+    
+        // Selecionar o banco de dados e a coleção
         database = mongoClient.getDatabase("gerenciadorArtigosDB");
         collection = database.getCollection("receitas");
 
@@ -164,13 +159,8 @@ public class GerenciadorArtigos {
         buscarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                buscarReceitas(); // Chama o método para buscar receitas por palavras-chave quando o botão é clicado
-                            }
-                
-                            private void buscarReceitas() {
-                                // TODO Auto-generated method stub
-                                throw new UnsupportedOperationException("Unimplemented method 'buscarReceitas'");
-                            }
+                buscarArtigos(); // Chama o método para buscar receitas por palavras-chave quando o botão é clicado
+            }
         });
 
         baixarButton.addActionListener(new ActionListener() {
